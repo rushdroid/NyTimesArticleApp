@@ -6,14 +6,14 @@ import com.example.nytimesapp.ui.model.NyTimes
 import javax.inject.Inject
 
 class GetMostViewedArticlesUseCase @Inject constructor(
-    private val nyTimesService: NyTimesService
+    private val apiService: NyTimesService
 ) {
 
     suspend operator fun invoke(
         apiKey: String
     ): Result<NyTimes> {
         return try {
-            val response = nyTimesService.getMostViewedArticles(apiKey)
+            val response = apiService.getMostViewedArticles(apiKey)
             if (response.isSuccessful) {
                 Result.success(response.body()!!.toNyTimes())
             } else {

@@ -32,15 +32,12 @@ class NyTimesViewModel @Inject constructor(
                 _nyTimesState.value = _nyTimesState.value.copy(
                     NYTimes = it,
                     isLoading = false,
-                    error = "",
-                    hasError = false,
                     isDataFetched = true
                 )
-            }, onFailure = {
+            }, onFailure = { e ->
                 _nyTimesState.value = _nyTimesState.value.copy(
                     isLoading = false,
-                    error = "Failed to get the data",
-                    hasError = true,
+                    error = e.message.toString(),
                     isDataFetched = false
                 )
             })
@@ -51,5 +48,9 @@ class NyTimesViewModel @Inject constructor(
         _nyTimesState.value = _nyTimesState.value.copy(
             selectedArticle = article
         )
+    }
+
+    fun resetError() {
+        _nyTimesState.value = NyTimesState(error = "")
     }
 }

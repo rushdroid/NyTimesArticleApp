@@ -30,6 +30,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -54,13 +55,8 @@ fun NyTimesScreen(
     val scaffoldState = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState() }
 
-    LaunchedEffect(Unit) {
-        if (viewModel.nyTimesState.value.isDataFetched.not())
-            viewModel.getMostViewedArticles()
-    }
-
-    LaunchedEffect(nyTimesState.error.isNotEmpty()) {
-        if (nyTimesState.error.isNotEmpty()) {
+    if (nyTimesState.error.isNotEmpty()) {
+        LaunchedEffect(nyTimesState.error) {
             scaffoldState.launch {
                 val result = snackBarHostState.showSnackbar(
                     message = nyTimesState.error,
@@ -69,15 +65,22 @@ fun NyTimesScreen(
                 )
                 when (result) {
                     SnackbarResult.ActionPerformed -> {
+                        viewModel.resetError()
                         viewModel.getMostViewedArticles()
                     }
 
                     SnackbarResult.Dismissed -> {
-
+                        viewModel.resetError()
+                        // Optionally handle dismiss
                     }
                 }
             }
         }
+    }
+
+    LaunchedEffect(Unit) {
+        if (viewModel.nyTimesState.value.isDataFetched.not())
+            viewModel.getMostViewedArticles()
     }
 
     Scaffold(

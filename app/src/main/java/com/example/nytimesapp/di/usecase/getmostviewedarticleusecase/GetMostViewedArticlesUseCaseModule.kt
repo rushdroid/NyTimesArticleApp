@@ -13,7 +13,7 @@ object GetMostViewedArticlesUseCaseModule {
 
     @Provides
     @Singleton
-    fun provideGetMostViewedArticleUseCase(nyTimesService: NyTimesService): GetMostViewedArticlesUseCase {
-        return GetMostViewedArticlesUseCase(nyTimesService)
+    fun provideGetMostViewedArticleUseCase(apiService: NyTimesService): GetMostViewedArticlesUseCase {
+        return GetMostViewedArticlesUseCase(apiService)
     }
 }

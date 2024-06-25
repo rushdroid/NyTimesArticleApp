@@ -33,7 +33,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URL)
+            .baseUrl("https://api.nytimes.com/svc/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

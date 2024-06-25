@@ -7,10 +7,10 @@ import retrofit2.http.Query
 
 interface NyTimesService {
 
-//    @GET("mostpopular/v2/mostviewed/all-sections/7.json")
-//    suspend fun getMostViewedArticless(
-//        @Query("api-key") apiKey: String
-//    ): RNyTimesArticle
+    @GET("mostpopular/v2/mostviewed/all-sections/7.json")
+    suspend fun getMostViewedArticless(
+        @Query("api-key") apiKey: String
+    ): RNyTimesArticle
 
     @GET("mostpopular/v2/mostviewed/all-sections/7.json")
     suspend fun getMostViewedArticles(
