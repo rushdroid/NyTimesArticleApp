@@ -2,6 +2,10 @@ package com.example.nytimesapp
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.ViewGroup
+import android.widget.Button
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -16,11 +20,16 @@ import com.example.nytimesapp.ui.screen.nyarticlelist.NyTimesScreen
 import com.example.nytimesapp.ui.screen.nyarticlelist.NyTimesViewModel
 import com.example.nytimesapp.ui.theme.NYTimesAppTheme
 import com.example.nytimesapp.util.NavigationRoute
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
+    private val myUser by lazy {
+        println("Lazy initialization")
+        "Hello"
+    }
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +39,21 @@ class MainActivity : AppCompatActivity() {
                 MyApp(navController = navController)
             }
         }
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w(">>>>>>>>>>>>>>>", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            Log.d(">>>>>>>>>>>>>>>", token)
+            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+        })
+        println(myUser)
+        println(myUser)
     }
 }
 

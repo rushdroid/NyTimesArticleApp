@@ -18,18 +18,18 @@ class NyTimeViewModelTest {
 
     private lateinit var viewModel: NyTimesViewModel
     private lateinit var nyTimeService: NyTimesService
-    private lateinit var fakeNyTimesRepository: FakeNyTimesRepository
+//    private lateinit var fakeNyTimesRepository: FakeNyTimesRepository
 
     @Before
     fun setup() {
         nyTimeService = mock<NyTimesService>()
-        fakeNyTimesRepository = FakeNyTimesRepository(nyTimeService)
-        viewModel = NyTimesViewModel(fakeNyTimesRepository)
+//        fakeNyTimesRepository = FakeNyTimesRepository(nyTimeService)
     }
+
 
     @Test
     fun getMostViewedArticles_success() = runBlocking {
-        fakeNyTimesRepository.isSuccess = true
+//        fakeNyTimesRepository.isSuccess = true
         viewModel.getMostViewedArticles()
         delay(5000)
         assert(viewModel.nyTimesState.value.NYTimes.results.isNotEmpty())

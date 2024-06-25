@@ -7,6 +7,9 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("jacoco")
+    id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -31,12 +34,18 @@ android {
             // Enable test coverage
             enableUnitTestCoverage = true
         }
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://api.nytimes.com/svc/\"");
+            buildConfigField("String", "API_KEY", "\"lzxDAUo2Q0o1KAnqdVHQkwZVAeqY79OX\"");
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"https://api.nytimes.com/svc/\"");
+            buildConfigField("String", "API_KEY", "\"PASTE_YOUR_API_KEY_HERE\"");
         }
     }
     compileOptions {
@@ -47,6 +56,7 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     composeOptions {
@@ -70,6 +80,8 @@ dependencies {
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("com.google.firebase:firebase-crashlytics:18.6.3")
+    implementation("com.google.firebase:firebase-messaging:23.4.1")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -86,6 +98,7 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.squareup.retrofit2:adapter-rxjava2:2.9.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.9.1")
+
 
 // Hilt
     implementation("com.google.dagger:hilt-android:2.50")

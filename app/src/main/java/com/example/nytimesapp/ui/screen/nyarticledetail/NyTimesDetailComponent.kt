@@ -31,9 +31,8 @@ fun NyTimesArticleDetailScreen(
     NewsArticleScreen(nyTimesState.value.selectedArticle)
 }
 
-
 @Composable
-fun NewsArticleScreen(
+private fun NewsArticleScreen(
     nyTimesArticle: NyTimesArticle
 ) {
     Column(

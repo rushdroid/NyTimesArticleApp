@@ -1,7 +1,7 @@
 package com.example.nytimesapp.di
 
+import com.example.nytimesapp.BuildConfig
 import com.example.nytimesapp.data.network.NyTimesService
-import com.example.nytimesapp.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -33,7 +33,7 @@ object NetworkModule {
     @Provides
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.API_BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -44,4 +44,3 @@ object NetworkModule {
         return retrofit.create(NyTimesService::class.java)
     }
 }
-
